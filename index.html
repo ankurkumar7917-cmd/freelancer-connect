@@ -13,7 +13,6 @@
 </head>
 <body>
 
-<!-- LOGIN -->
 <div class="container" id="auth">
   <h2>Login / Sign Up</h2>
   <input type="text" id="email" placeholder="Email"><br>
@@ -22,14 +21,12 @@
   <button onclick="login()">Login</button>
 </div>
 
-<!-- ROLE -->
 <div class="container hidden" id="role">
   <h2>Who are you?</h2>
   <button onclick="selectRole('Freelancer')">Freelancer</button>
   <button onclick="selectRole('Employer')">Employer</button>
 </div>
 
-<!-- DASHBOARD -->
 <div class="container hidden" id="dashboard">
   <h2 id="welcome"></h2>
   <div id="content"></div>
@@ -41,21 +38,31 @@ let jobs = JSON.parse(localStorage.getItem('jobs')) || [];
 let currentUser = null;
 
 function signup(){
-  let email = emailInput();
-  let password = passwordInput();
+  let email = document.getElementById('email').value;
+  let password = document.getElementById('password').value;
+
+  if(!email || !password){
+    alert("Enter details");
+    return;
+  }
+
   users.push({email,password});
   localStorage.setItem('users', JSON.stringify(users));
-  alert("Signup done!");
+  alert("Signup successful!");
 }
 
 function login(){
-  let email = emailInput();
-  let password = passwordInput();
+  let email = document.getElementById('email').value;
+  let password = document.getElementById('password').value;
+
   let user = users.find(u=>u.email===email && u.password===password);
+
   if(user){
     currentUser = user;
     show('role');
-  } else alert("Invalid login");
+  } else {
+    alert("Invalid login");
+  }
 }
 
 function selectRole(role){
@@ -66,8 +73,8 @@ function selectRole(role){
 }
 
 function loadDashboard(){
-  document.getElementById('welcome').innerText = "Welcome " + currentUser.email;
   let content = document.getElementById('content');
+  document.getElementById('welcome').innerText = "Welcome " + currentUser.email;
 
   if(currentUser.role === "Employer"){
     content.innerHTML = `
@@ -91,6 +98,11 @@ function loadDashboard(){
 function postJob(){
   let title = document.getElementById('jobTitle').value;
   let budget = document.getElementById('jobBudget').value;
+
+  if(!title || !budget){
+    alert("Fill all fields");
+    return;
+  }
 
   jobs.push({title, budget, employer: currentUser.email});
   localStorage.setItem('jobs', JSON.stringify(jobs));
@@ -116,7 +128,7 @@ function showJobs(isFreelancer=false){
 }
 
 function applyJob(index){
-  alert("Applied to job: " + jobs[index].title);
+  alert("Applied to: " + jobs[index].title);
 }
 
 function show(id){
@@ -125,9 +137,6 @@ function show(id){
   document.getElementById('dashboard').classList.add('hidden');
   document.getElementById(id).classList.remove('hidden');
 }
-
-function emailInput(){ return document.getElementById('email').value; }
-function passwordInput(){ return document.getElementById('password').value; }
 </script>
 
 </body>
