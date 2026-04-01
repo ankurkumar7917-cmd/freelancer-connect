@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreelancerHub | Elite Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        
+        body {
+            background: #020617;
+            color: white;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* 2026 Modern Aura Background */
+        .aura {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 0% 0%, #1e1b4b 0%, transparent 50%),
+                        radial-gradient(circle at 100% 100%, #312e81 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #fff 30%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        input {
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="aura"></div>
+
+    <nav class="fixed w-full z-50 px-6 py-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center glass rounded-3xl px-8 py-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/40">
+                    <i class="fas fa-layer-group text-white"></i>
+                </div>
+                <span class="text-2xl font-extrabold tracking-tighter">FreelancerHub</span>
+            </div>
+            
+            <div class="hidden md:flex gap-10 items-center text-sm font-semibold text-gray-400">
+                <a href="#" class="hover:text-white transition">Home</a>
+                <a href="#achievements" class="hover:text-white transition">Achievements</a>
+                <a href="#about" class="hover:text-white transition">About</a>
+                <button onclick="scrollToAuth()" class="bg-white text-black px-6 py-2.5 rounded-full hover:scale-105 active:scale-95 transition">Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
+        <div class="px-5 py-2 glass rounded-full text-xs font-bold tracking-widest text-indigo-400 mb-8 uppercase border border-indigo-500/20">
+            Platform of the Year 2026
+        </div>
+        <h1 class="text-6xl md:text-8xl font-extrabold mb-8 hero-gradient tracking-tighter leading-tight">
+            Work Smarter.<br>Hire Faster.
+        </h1>
+        <p class="text-gray-400 max-w-xl text-lg md:text-xl mb-12 font-light leading-relaxed">
+            The world's most advanced hub for digital talent. Secured by AI, powered by community.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-5">
+            <button onclick="scrollToAuth()" class="bg-indigo-600 hover:bg-indigo-500 px-10 py-5 rounded-2xl font-bold text-lg transition-all shadow-xl shadow-indigo-500/20">
+                Start Building
+            </button>
+            <button class="glass px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/5 transition">
+                Explore Talent
+            </button>
+        </div>
+    </section>
+
+    <section id="achievements" class="py-32 px-6 max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-3 gap-10">
+            <div class="glass p-10 rounded-[2.5rem]">
+                <h4 class="text-indigo-400 font-bold mb-4">#01</h4>
+                <h3 class="text-3xl font-bold mb-4 italic">Global Reach</h3>
+                <p class="text-gray-400 leading-relaxed">Connecting 200+ territories with instant local currency payments.</p>
+            </div>
+            <div class="glass p-10 rounded-[2.5rem] border-indigo-500/30 bg-white/5">
+                <h4 class="text-indigo-400 font-bold mb-4">#02</h4>
+                <h3 class="text-3xl font-bold mb-4 italic">Verified Skills</h3>
+                <p class="text-gray-400 leading-relaxed">Every freelancer passes a rigorous 5-step AI vetting process.</p>
+            </div>
+            <div class="glass p-10 rounded-[2.5rem]">
+                <h4 class="text-indigo-400 font-bold mb-4">#03</h4>
+                <h3 class="text-3xl font-bold mb-4 italic">Secure Auth</h3>
+                <p class="text-gray-400 leading-relaxed">Enterprise-grade security powered by our Supabase cloud integration.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="auth" class="py-32 px-6 flex justify-center">
+        <div class="glass p-12 rounded-[3rem] w-full max-w-md border-white/10">
+            <div class="text-center mb-10">
+                <h2 class="text-4xl font-black mb-3 hero-gradient">Get Started</h2>
+                <p class="text-gray-500 text-sm">Join the 500k+ users already using the Hub.</p>
+            </div>
+            
+            <div class="space-y-5">
+                <input id="email" type="email" placeholder="Email Address" class="w-full p-5 rounded-2xl bg-black/50 border border-white/5 focus:border-indigo-500 outline-none transition" />
+                <input id="password" type="password" placeholder="Create Password" class="w-full p-5 rounded-2xl bg-black/50 border border-white/5 focus:border-indigo-500 outline-none transition" />
+                
+                <div class="pt-4 flex flex-col gap-3">
+                    <button onclick="handleLogin()" class="w-full bg-indigo-600 hover:bg-indigo-500 py-5 rounded-2xl font-extrabold transition-all shadow-lg shadow-indigo-600/20">Log In</button>
+                    <button onclick="handleSignUp()" class="w-full glass py-5 rounded-2xl font-extrabold hover:bg-white/10 transition">Sign Up</button>
+                </div>
+            </div>
+            
+            <div id="statusMessage" class="mt-6 text-center text-sm font-medium hidden"></div>
+        </div>
+    </section>
+
+    <footer class="py-20 text-center opacity-30 text-xs tracking-widest font-bold uppercase">
+        © 2026 FreelancerHub Premium Ecosystem. All Rights Reserved.
+    </footer>
+
+    <script>
+        // Connecting to YOUR Supabase Project
+        const supabaseUrl = 'https://gdmdqgxgzoifmdjukclp.supabase.co';
+        const supabaseKey = 'sb_publishable_7Wxmv-yy1MGSuXmL5XDMqg_MpSr4NAl';
+        
+        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        function showStatus(msg, isError = false) {
+            const el = document.getElementById('statusMessage');
+            el.innerText = msg;
+            el.classList.remove('hidden', 'text-red-400', 'text-green-400');
+            el.classList.add(isError ? 'text-red-400' : 'text-green-400');
+        }
+
+        function scrollToAuth() {
+            document.getElementById('auth').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        async function handleSignUp() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if(!email || !password) return showStatus("Email and Password required", true);
+
+            showStatus("Processing registration...");
+            const { data, error } = await _supabase.auth.signUp({ email, password });
+
+            if (error) {
+                showStatus(error.message, true);
+            } else {
+                showStatus("Success! Check your email for a verification link.");
+            }
+        }
+
+        async function handleLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if(!email || !password) return showStatus("Credentials required", true);
+
+            showStatus("Authenticating...");
+            const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
+
+            if (error) {
+                showStatus(error.message, true);
+            } else {
+                showStatus("Welcome back! Loading your hub...");
+                setTimeout(() => alert("You are now logged in! Dashboard coming soon."), 1000);
+            }
+        }
+    </script>
+
+</body>
+</html>
