@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Role</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Welcome!</h1>
+            <p>Please choose your account type to continue.</p>
+        </header>
+
+        <div class="role-selection">
+            <div class="card professional" onclick="selectRole('professional')">
+                <div class="icon">💼</div>
+                <h2>I am a Professional</h2>
+                <p>I want to offer my services, find projects, and manage my work.</p>
+                <button class="btn btn-blue">Join as a Professional</button>
+            </div>
+
+            <div class="card client" onclick="selectRole('client')">
+                <div class="icon">🤝</div>
+                <h2>I am a Client</h2>
+                <p>I want to post project requirements, find experts, and manage my hires.</p>
+                <button class="btn btn-green">Join as a Client</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>You can update your role anytime in Profile Settings.</p>
+        </footer>
+    </div>
+
+    <script>
+        function selectRole(role) {
+            console.log("Role selected: " + role);
+            // Redirect logic goes here, e.g.:
+            // window.location.href = role + "-setup.html";
+        }
+    </script>
+</body>
+</html>
