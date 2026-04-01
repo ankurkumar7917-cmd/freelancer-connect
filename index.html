@@ -4,139 +4,105 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Freelancer Platform</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f4f6f9;
+    html {
+      scroll-behavior: smooth;
     }
-    header {
-      background: #111827;
-      color: white;
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 20px;
-    }
-    nav button {
-      margin-left: 10px;
-      padding: 8px 12px;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    .btn {
-      background: #2563eb;
-      color: white;
-    }
-    .container {
-      padding: 20px;
-    }
-    .hidden {
-      display: none;
-    }
-    .card {
-      background: white;
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    button.submit {
-      background: #10b981;
-      color: white;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+    .glass {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.1);
     }
   </style>
 </head>
-<body>
+<body class="bg-gray-950 text-white">
 
-<header>
-  <h1>Freelancer Hub</h1>
-  <nav>
-    <button onclick="showSection('home')">Home</button>
-    <button onclick="showSection('login')">Login</button>
-    <button onclick="showSection('signup')">Sign Up</button>
-  </nav>
-</header>
+<!-- Navbar -->
+<nav class="fixed w-full z-50 glass px-6 py-4 flex justify-between items-center">
+  <h1 class="text-xl font-bold">FreelancerHub</h1>
+  <div class="hidden md:flex gap-6 items-center">
+    <a href="#home" class="hover:text-blue-400">Home</a>
+    <a href="#achievements" class="hover:text-blue-400">Achievements</a>
+    <a href="#about" class="hover:text-blue-400">About</a>
+    <button onclick="openAuth()" class="bg-blue-600 px-4 py-2 rounded-lg">Login</button>
+    <button onclick="openAuth()" class="bg-purple-600 px-4 py-2 rounded-lg">Sign Up</button>
+  </div>
+</nav>
 
-<div class="container">
+<!-- Hero Section -->
+<section id="home" class="h-screen flex flex-col justify-center items-center text-center px-6">
+  <h1 class="text-4xl md:text-6xl font-bold mb-4">Build. Hire. Grow.</h1>
+  <p class="text-gray-300 max-w-xl mb-6">A modern platform connecting talented freelancers with businesses worldwide. Simplifying hiring, payments, and collaboration.</p>
+  <button onclick="scrollToAuth()" class="bg-blue-600 px-6 py-3 rounded-xl text-lg">Get Started</button>
+</section>
 
-  <!-- Home Section -->
-  <div id="home">
-    <h2>Welcome to Freelancer Hub</h2>
-    <p>Connect with freelancers and post jobs easily.</p>
+<!-- Achievements Section -->
+<section id="achievements" class="py-20 px-6">
+  <h2 class="text-3xl font-bold text-center mb-12">Our Achievements</h2>
 
-    <div class="card">
-      <h3>Post a Job</h3>
-      <input type="text" id="jobTitle" placeholder="Job Title" />
-      <textarea id="jobDesc" placeholder="Job Description"></textarea>
-      <button class="submit" onclick="postJob()">Post Job</button>
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="glass p-4 rounded-xl hover:scale-105 transition">
+      <img src="https://source.unsplash.com/400x300/?startup" class="rounded-lg mb-4" />
+      <p>Launched platform connecting thousands of freelancers globally.</p>
     </div>
-
-    <h3>Jobs</h3>
-    <div id="jobsList"></div>
+    <div class="glass p-4 rounded-xl hover:scale-105 transition">
+      <img src="https://source.unsplash.com/400x300/?teamwork" class="rounded-lg mb-4" />
+      <p>Built a trusted ecosystem for secure hiring and collaboration.</p>
+    </div>
+    <div class="glass p-4 rounded-xl hover:scale-105 transition">
+      <img src="https://source.unsplash.com/400x300/?technology" class="rounded-lg mb-4" />
+      <p>Integrated smart tools for efficient job matching and workflow.</p>
+    </div>
   </div>
+</section>
 
-  <!-- Login Section -->
-  <div id="login" class="hidden">
-    <h2>Login</h2>
-    <input type="text" placeholder="Username" />
-    <input type="password" placeholder="Password" />
-    <button class="submit">Login</button>
+<!-- About Section -->
+<section id="about" class="py-20 px-6">
+  <div class="grid md:grid-cols-2 gap-10 items-center">
+    <img src="https://source.unsplash.com/600x500/?office,team" class="rounded-2xl" />
+    <div>
+      <h2 class="text-3xl font-bold mb-4">About Us</h2>
+      <p class="text-gray-300 mb-4">
+        We aim to bridge the gap between skilled freelancers and businesses seeking talent. Our platform ensures seamless communication, secure payments, and efficient project management.
+      </p>
+      <p class="text-gray-400">
+        Our mission is to empower individuals and companies by creating opportunities and simplifying the way work gets done.
+      </p>
+    </div>
   </div>
+</section>
 
-  <!-- Signup Section -->
-  <div id="signup" class="hidden">
-    <h2>Sign Up</h2>
-    <input type="text" placeholder="Username" />
-    <input type="email" placeholder="Email" />
-    <input type="password" placeholder="Password" />
-    <button class="submit">Create Account</button>
+<!-- Auth Section -->
+<section id="auth" class="py-20 px-6 flex justify-center">
+  <div class="glass p-8 rounded-2xl w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-4 text-center">Login / Sign Up</h2>
+    <input type="text" placeholder="Username" class="w-full p-3 mb-3 rounded bg-gray-800" />
+    <input type="password" placeholder="Password" class="w-full p-3 mb-4 rounded bg-gray-800" />
+    <button class="w-full bg-blue-600 py-2 rounded mb-2">Login</button>
+    <button class="w-full bg-purple-600 py-2 rounded">Sign Up</button>
   </div>
+</section>
 
-</div>
+<!-- Footer -->
+<footer class="text-center py-10 text-gray-500">
+  © 2026 FreelancerHub. All rights reserved.
+</footer>
 
 <script>
-  function showSection(section) {
-    document.getElementById('home').classList.add('hidden');
-    document.getElementById('login').classList.add('hidden');
-    document.getElementById('signup').classList.add('hidden');
-
-    document.getElementById(section).classList.remove('hidden');
+  function openAuth() {
+    document.getElementById('auth').scrollIntoView({ behavior: 'smooth' });
   }
 
-  function postJob() {
-    const title = document.getElementById('jobTitle').value;
-    const desc = document.getElementById('jobDesc').value;
-
-    if (!title || !desc) {
-      alert("Please fill all fields");
-      return;
-    }
-
-    const jobCard = document.createElement('div');
-    jobCard.className = 'card';
-    jobCard.innerHTML = <h4>${title}</h4><p>${desc}</p>;
-
-    document.getElementById('jobsList').appendChild(jobCard);
-
-    document.getElementById('jobTitle').value = '';
-    document.getElementById('jobDesc').value = '';
+  function scrollToAuth() {
+    document.getElementById('auth').scrollIntoView({ behavior: 'smooth' });
   }
 </script>
 
