@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Freelancer Platform</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f6f9;
+    }
+    header {
+      background: #111827;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+    nav button {
+      margin-left: 10px;
+      padding: 8px 12px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .btn {
+      background: #2563eb;
+      color: white;
+    }
+    .container {
+      padding: 20px;
+    }
+    .hidden {
+      display: none;
+    }
+    .card {
+      background: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button.submit {
+      background: #10b981;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Freelancer Hub</h1>
+  <nav>
+    <button onclick="showSection('home')">Home</button>
+    <button onclick="showSection('login')">Login</button>
+    <button onclick="showSection('signup')">Sign Up</button>
+  </nav>
+</header>
+
+<div class="container">
+
+  <!-- Home Section -->
+  <div id="home">
+    <h2>Welcome to Freelancer Hub</h2>
+    <p>Connect with freelancers and post jobs easily.</p>
+
+    <div class="card">
+      <h3>Post a Job</h3>
+      <input type="text" id="jobTitle" placeholder="Job Title" />
+      <textarea id="jobDesc" placeholder="Job Description"></textarea>
+      <button class="submit" onclick="postJob()">Post Job</button>
+    </div>
+
+    <h3>Jobs</h3>
+    <div id="jobsList"></div>
+  </div>
+
+  <!-- Login Section -->
+  <div id="login" class="hidden">
+    <h2>Login</h2>
+    <input type="text" placeholder="Username" />
+    <input type="password" placeholder="Password" />
+    <button class="submit">Login</button>
+  </div>
+
+  <!-- Signup Section -->
+  <div id="signup" class="hidden">
+    <h2>Sign Up</h2>
+    <input type="text" placeholder="Username" />
+    <input type="email" placeholder="Email" />
+    <input type="password" placeholder="Password" />
+    <button class="submit">Create Account</button>
+  </div>
+
+</div>
+
+<script>
+  function showSection(section) {
+    document.getElementById('home').classList.add('hidden');
+    document.getElementById('login').classList.add('hidden');
+    document.getElementById('signup').classList.add('hidden');
+
+    document.getElementById(section).classList.remove('hidden');
+  }
+
+  function postJob() {
+    const title = document.getElementById('jobTitle').value;
+    const desc = document.getElementById('jobDesc').value;
+
+    if (!title || !desc) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    const jobCard = document.createElement('div');
+    jobCard.className = 'card';
+    jobCard.innerHTML = <h4>${title}</h4><p>${desc}</p>;
+
+    document.getElementById('jobsList').appendChild(jobCard);
+
+    document.getElementById('jobTitle').value = '';
+    document.getElementById('jobDesc').value = '';
+  }
+</script>
+
+</body>
+</html>
