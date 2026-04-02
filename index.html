@@ -52,24 +52,14 @@
             </div>
         </div>
     </nav>
-    <main style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh; text-align: center; color: white; position: relative; z-index: 10;">
-    
-    <h1 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 20px;">Build Your Future</h1>
-    <p style="font-size: 1.2rem; margin-bottom: 40px; opacity: 0.9; max-width: 600px;">
-        Connect with top-tier professionals or find your next big project. 
-        Everything you need, all in one place.
-    </p>
 
-    <a href="role-selection.html" class="main-button">Get Started</a>
-
-</main>
-
-    <section id="home" class="min-h-[80vh] flex flex-col justify-center items-center text-center px-6">
+    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-6">
         <h1 class="text-6xl md:text-8xl font-extrabold mb-6 tracking-tighter">
             Elevate Your <br> <span class="text-indigo-400">Career.</span>
         </h1>
         <p class="text-gray-400 max-w-2xl text-lg mb-10">The premium destination for digital experts. Scroll down to see our impact or join the hub below.</p>
-        <a href="#join" class="bg-white text-black px-10 py-4 rounded-full font-bold hover:scale-105 transition">Start Now</a>
+        
+        <a href="#join" class="bg-white text-black px-10 py-4 rounded-full font-bold hover:scale-105 transition shadow-lg">Start Now</a>
     </section>
 
     <section id="achievements" class="py-20 px-6 max-w-5xl mx-auto">
@@ -154,7 +144,7 @@
                 return;
             }
 
-            status.innerText = currentMode === 'signup' ? "Creating account..." : "Authenticating...";
+            status.innerText = "Processing...";
             status.className = "mt-6 text-center text-sm font-medium text-indigo-400";
             status.classList.remove('hidden');
 
@@ -163,17 +153,20 @@
                 if(error) {
                     status.innerText = error.message; status.classList.add('text-red-400');
                 } else {
-                    status.innerText = "Success! Check your email for a verification link.";
+                    status.innerText = "Success! Redirecting to selection...";
                     status.classList.add('text-green-400');
+                    // SEND TO ROLE SELECTION
+                    setTimeout(() => window.location.href = 'role-selection.html', 1500);
                 }
             } else {
                 const { error } = await _supabase.auth.signInWithPassword({ email, password });
                 if(error) {
                     status.innerText = error.message; status.classList.add('text-red-400');
                 } else {
-                    status.innerText = "Redirecting to Dashboard...";
+                    status.innerText = "Success! Redirecting...";
                     status.classList.add('text-green-400');
-                    setTimeout(() => window.location.href = 'dashboard.html', 1500);
+                    // SEND TO ROLE SELECTION
+                    setTimeout(() => window.location.href = 'role-selection.html', 1500);
                 }
             }
         }
