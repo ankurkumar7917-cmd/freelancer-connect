@@ -3,44 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Your Role</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <title>Select Your Path | FreelancerHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        
+        body { 
+            background: #020617; 
+            color: white; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-    <div class="container">
-        <header>
-            <h1>Welcome!</h1>
-            <p>Please choose your account type to continue.</p>
+        /* Matches the home page mesh background exactly */
+        .mesh-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                        radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%);
+            z-index: -1;
+        }
+
+        /* The 'Glass' card effect, updated for a professional/client look */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        /* Hover animation: it will pop up and glow */
+        .glass-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Blue hover border for the professional side */
+        .card-professional:hover {
+            border-color: #6366f1;
+        }
+
+        /* Green hover border for the client side */
+        .card-client:hover {
+            border-color: #10b981;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center px-6 pt-20 pb-10">
+
+    <div class="mesh-bg"></div>
+
+    <div class="max-w-6xl w-full text-center">
+        
+        <header class="mb-16">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-5 tracking-tighter">Welcome!</h1>
+            <p class="text-gray-400 text-xl max-w-2xl mx-auto">Please choose your account type to customize your experience and continue.</p>
         </header>
 
-        <div class="role-selection">
-           <div class="card professional" onclick="location.href='professional-setup.html'">
-                <div class="icon">💼</div>
-                <h2>I am a Professional</h2>
-                <p>I want to offer my services, find projects, and manage my work.</p>
-                <button class="btn btn-blue">Join as a Professional</button>
+        <div class="grid md:grid-cols-2 gap-10">
+
+            <div class="glass-card card-professional p-12 rounded-[2.5rem] flex flex-col items-center text-left h-full" onclick="location.href='professional-setup.html'">
+                
+                <div class="w-20 h-20 bg-indigo-600/10 rounded-3xl flex items-center justify-center mb-8 border border-indigo-600/20 shadow-lg shadow-indigo-600/10">
+                    <i class="fas fa-user-ninja text-indigo-400 text-4xl"></i>
+                </div>
+                
+                <div class="flex-grow">
+                    <h2 class="text-3xl font-bold mb-4 tracking-tight">I am a Professional</h2>
+                    <p class="text-gray-400 text-base leading-relaxed mb-6">I want to offer my services, find premium projects, and manage my workflow efficiently.</p>
+                </div>
+
+                <div class="w-full mt-6 bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-4 rounded-full font-bold text-center transition shadow-lg shadow-indigo-600/20">
+                    Join as a Professional
+                </div>
             </div>
 
-           <div class="card client" onclick="location.href='client-setup.html'">
-                <div class="icon">🤝</div>
-                <h2>I am a Client</h2>
-                <p>I want to post project requirements, find experts, and manage my hires.</p>
-                <button class="btn btn-green">Join as a Client</button>
+            <div class="glass-card card-client p-12 rounded-[2.5rem] flex flex-col items-center text-left h-full" onclick="location.href='client-setup.html'">
+                
+                <div class="w-20 h-20 bg-emerald-600/10 rounded-3xl flex items-center justify-center mb-8 border border-emerald-600/20 shadow-lg shadow-emerald-600/10">
+                    <i class="fas fa-briefcase text-emerald-400 text-4xl"></i>
+                </div>
+                
+                <div class="flex-grow">
+                    <h2 class="text-3xl font-bold mb-4 tracking-tight">I am a Client</h2>
+                    <p class="text-gray-400 text-base leading-relaxed mb-6">I want to post project requirements, find top-tier experts, and manage my hires seamlessly.</p>
+                </div>
+
+                <div class="w-full mt-6 bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-4 rounded-full font-bold text-center transition shadow-lg shadow-emerald-600/20">
+                    Join as a Client
+                </div>
             </div>
         </div>
 
-        <footer>
-            <p>You can update your role anytime in Profile Settings.</p>
+        <footer class="mt-20 py-10 border-t border-white/5">
+            <p class="text-gray-600 text-xs font-bold tracking-widest uppercase">
+                You can update your role anytime in Profile Settings.
+            </p>
         </footer>
     </div>
-
-    <script>
-        function selectRole(role) {
-            console.log("Role selected: " + role);
-            // Redirect logic goes here, e.g.:
-            // window.location.href = role + "-setup.html";
-        }
-    </script>
 </body>
 </html>
