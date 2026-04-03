@@ -24,6 +24,13 @@
         select option { background-color: #0f172a; color: white; }
         input:focus, select:focus, textarea:focus { border-color: #6366f1 !important; outline: none; }
         .section-tag { color: #6366f1; font-weight: 800; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.2em; margin-bottom: 1rem; display: block; }
+        
+        /* Custom Styling for the Upload Box */
+        .file-upload {
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .file-upload:hover { border-color: #6366f1; background: rgba(99, 102, 241, 0.05); }
     </style>
 </head>
 <body class="flex flex-col items-center justify-start px-6 py-12">
@@ -32,72 +39,74 @@
     <div class="max-w-3xl w-full">
         <header class="text-center mb-10">
             <h1 class="text-5xl font-extrabold mb-2 tracking-tighter">Join the Elite.</h1>
-            <p class="text-gray-400">Complete your profile to start receiving Indian & International leads.</p>
+            <p class="text-gray-400">Indian professionals are leading the world. Show them why.</p>
         </header>
 
         <form class="glass-card p-8 md:p-10 rounded-[2.5rem] space-y-10">
             
             <section>
-                <span class="section-tag">01. Professional Info</span>
+                <span class="section-tag">01. Professional Profile</span>
                 <div class="grid md:grid-cols-2 gap-5 mb-5">
                     <input type="text" placeholder="Full Name" class="w-full px-5 py-4 rounded-2xl">
-                    <input type="text" placeholder="Job Title (e.g. Content Writer)" class="w-full px-5 py-4 rounded-2xl">
+                    <input type="text" placeholder="Job Title (e.g. Graphic Designer)" class="w-full px-5 py-4 rounded-2xl">
                 </div>
                 <div class="grid md:grid-cols-2 gap-5 mb-5">
                     <select class="w-full px-5 py-4 rounded-2xl">
-                        <option value="" disabled selected>Select Your State</option>
-                        <option>Maharashtra</option><option>Delhi</option><option>Karnataka</option>
-                        <option>Tamil Nadu</option><option>Telangana</option><option>Gujarat</option>
-                        <option>Uttar Pradesh</option><option>West Bengal</option><option>Other</option>
+                        <option value="" disabled selected>Work Preferences</option>
+                        <option>Indian Standard Time (IST)</option>
+                        <option>International / US Shifts</option>
+                        <option>Hybrid / Weekend Support</option>
                     </select>
-                    <input type="text" placeholder="City (e.g. Mumbai, Bangalore)" class="w-full px-5 py-4 rounded-2xl">
+                    <input type="text" placeholder="City (e.g. Bangalore, Pune)" class="w-full px-5 py-4 rounded-2xl">
                 </div>
                 <textarea placeholder="Briefly describe your expertise..." class="w-full px-5 py-4 rounded-2xl h-24 resize-none"></textarea>
             </section>
 
             <section>
-                <span class="section-tag">02. Availability & Skills</span>
-                <div class="grid md:grid-cols-2 gap-5 mb-5">
-                    <select class="w-full px-5 py-4 rounded-2xl">
-                        <option value="" disabled selected>Experience Level</option>
-                        <option>Fresher</option><option>1-3 Years</option><option>3-5 Years</option><option>5+ Years (Expert)</option>
-                    </select>
-                    <select class="w-full px-5 py-4 rounded-2xl">
-                        <option value="" disabled selected>Work Preferences</option>
-                        <option>Indian Clients Only (IST)</option>
-                        <option>International Overlap (US/UK)</option>
-                        <option>Flexible / Night Shifts</option>
-                    </select>
+                <span class="section-tag">02. Proof of Work</span>
+                <div class="grid md:grid-cols-2 gap-5 mb-6">
+                    <div class="flex flex-col space-y-2">
+                        <label class="text-xs text-gray-400 ml-1">Upload Resume (PDF/Word)</label>
+                        <input type="file" class="w-full px-4 py-3 rounded-2xl text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer">
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <label class="text-xs text-gray-400 ml-1">Portfolio Link (Behance/GitHub)</label>
+                        <input type="url" placeholder="https://..." class="w-full px-5 py-3 rounded-2xl">
+                    </div>
                 </div>
-                <input type="text" placeholder="Key Skills (e.g. SEO, Java, Tally, Canva)" class="w-full px-5 py-4 rounded-2xl">
+
+                <div class="space-y-3">
+                    <label class="text-xs text-gray-400 ml-1">Describe your Best Project (Sample Work)</label>
+                    <textarea placeholder="Example: I built a delivery app for a local grocery store which handled 500+ orders daily..." class="w-full px-5 py-4 rounded-2xl h-28 resize-none bg-indigo-600/5"></textarea>
+                </div>
             </section>
 
             <section class="bg-indigo-600/5 p-6 rounded-[2rem] border border-indigo-500/10">
                 <span class="section-tag">03. Pricing & Payouts</span>
                 <div class="grid md:grid-cols-2 gap-5">
                     <div class="relative">
-                        <span class="absolute left-5 top-4 text-gray-500">₹</span>
-                        <input type="number" placeholder="Hourly Rate (INR)" class="w-full pl-10 pr-5 py-4 rounded-2xl">
+                        <span class="absolute left-5 top-4 text-gray-500 font-bold">₹</span>
+                        <input type="number" placeholder="Expected Rate (per hour)" class="w-full pl-10 pr-5 py-4 rounded-2xl">
                     </div>
                     <select class="w-full px-5 py-4 rounded-2xl">
-                        <option value="" disabled selected>Preferred Payment</option>
-                        <option>UPI (GPay/PhonePe)</option>
-                        <option>Direct Bank Transfer</option>
-                        <option>PayPal (For International)</option>
+                        <option value="" disabled selected>Payment Method</option>
+                        <option>UPI (Google Pay, PhonePe, Paytm)</option>
+                        <option>IMPS / Bank Transfer</option>
+                        <option>International (PayPal/Stripe)</option>
                     </select>
                 </div>
             </section>
 
             <section>
-                <span class="section-tag">04. Verification</span>
+                <span class="section-tag">04. Instant Contact</span>
                 <div class="grid md:grid-cols-2 gap-5">
-                    <input type="email" placeholder="Email Address" class="w-full px-5 py-4 rounded-2xl">
+                    <input type="email" placeholder="Professional Email" class="w-full px-5 py-4 rounded-2xl">
                     <input type="tel" placeholder="WhatsApp Number" class="w-full px-5 py-4 rounded-2xl">
                 </div>
             </section>
 
             <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-5 rounded-full font-extrabold text-xl transition-all shadow-xl shadow-indigo-600/30">
-                Create My Profile
+                Create My Account
             </button>
         </form>
     </div>
