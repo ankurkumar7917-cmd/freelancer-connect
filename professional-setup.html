@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Setup | FreelancerHub</title>
+    <title>Professional Setup | FreelancerHub India</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
@@ -15,139 +15,90 @@
                         radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%);
             z-index: -1;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
         input, select, textarea {
             background: rgba(255, 255, 255, 0.05) !important;
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
             color: white !important;
-            transition: all 0.3s ease;
         }
-        input:focus, select:focus, textarea:focus { 
-            border-color: #6366f1 !important; 
-            background: rgba(255, 255, 255, 0.08) !important;
-            outline: none; 
-        }
-        .section-label {
-            color: #6366f1; font-weight: 800; text-transform: uppercase; 
-            font-size: 0.75rem; letter-spacing: 0.1em; margin-bottom: 1.5rem; display: block;
-        }
+        select option { background-color: #0f172a; color: white; }
+        input:focus, select:focus, textarea:focus { border-color: #6366f1 !important; outline: none; }
+        .section-tag { color: #6366f1; font-weight: 800; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.2em; margin-bottom: 1rem; display: block; }
     </style>
 </head>
-<body class="flex flex-col items-center justify-start px-6 py-16">
+<body class="flex flex-col items-center justify-start px-6 py-12">
     <div class="mesh-bg"></div>
 
-    <div class="max-w-4xl w-full">
-        <header class="text-center mb-16">
-            <h1 class="text-5xl font-extrabold mb-4 tracking-tighter">Professional Onboarding</h1>
-            <p class="text-gray-400 text-lg">Build a profile that stands out to high-paying clients.</p>
+    <div class="max-w-3xl w-full">
+        <header class="text-center mb-10">
+            <h1 class="text-5xl font-extrabold mb-2 tracking-tighter">Join the Elite.</h1>
+            <p class="text-gray-400">Complete your profile to start receiving Indian & International leads.</p>
         </header>
 
-        <form class="glass-card p-10 md:p-14 rounded-[3rem] space-y-12">
+        <form class="glass-card p-8 md:p-10 rounded-[2.5rem] space-y-10">
             
             <section>
-                <span class="section-label">01. Identity & Bio</span>
-                <div class="grid md:grid-cols-2 gap-8 mb-6">
-                    <div class="space-y-2">
-                        <label class="text-sm text-gray-400 ml-1">Full Name</label>
-                        <input type="text" placeholder="John Doe" class="w-full px-6 py-4 rounded-2xl">
-                    </div>
-                    <div class="space-y-2">
-                        <label class="text-sm text-gray-400 ml-1">Professional Headline</label>
-                        <input type="text" placeholder="Full Stack Developer | AI Specialist" class="w-full px-6 py-4 rounded-2xl">
-                    </div>
+                <span class="section-tag">01. Professional Info</span>
+                <div class="grid md:grid-cols-2 gap-5 mb-5">
+                    <input type="text" placeholder="Full Name" class="w-full px-5 py-4 rounded-2xl">
+                    <input type="text" placeholder="Job Title (e.g. Content Writer)" class="w-full px-5 py-4 rounded-2xl">
                 </div>
-                <div class="space-y-2">
-                    <label class="text-sm text-gray-400 ml-1">Professional Summary</label>
-                    <textarea placeholder="Tell clients about your unique value..." class="w-full px-6 py-4 rounded-2xl h-32 resize-none"></textarea>
+                <div class="grid md:grid-cols-2 gap-5 mb-5">
+                    <select class="w-full px-5 py-4 rounded-2xl">
+                        <option value="" disabled selected>Select Your State</option>
+                        <option>Maharashtra</option><option>Delhi</option><option>Karnataka</option>
+                        <option>Tamil Nadu</option><option>Telangana</option><option>Gujarat</option>
+                        <option>Uttar Pradesh</option><option>West Bengal</option><option>Other</option>
+                    </select>
+                    <input type="text" placeholder="City (e.g. Mumbai, Bangalore)" class="w-full px-5 py-4 rounded-2xl">
                 </div>
+                <textarea placeholder="Briefly describe your expertise..." class="w-full px-5 py-4 rounded-2xl h-24 resize-none"></textarea>
             </section>
 
             <section>
-                <span class="section-label">02. Expertise & Proof</span>
-                <div class="grid md:grid-cols-2 gap-8 mb-6">
-                    <div class="space-y-2">
-                        <label class="text-sm text-gray-400 ml-1">Primary Skill Tags</label>
-                        <input type="text" placeholder="React, Python, Figma" class="w-full px-6 py-4 rounded-2xl">
-                    </div>
-                    <div class="space-y-2">
-                        <label class="text-sm text-gray-400 ml-1">Years of Experience</label>
-                        <select class="w-full px-6 py-4 rounded-2xl appearance-none">
-                            <option>1-3 Years</option>
-                            <option>3-7 Years</option>
-                            <option>7-10 Years</option>
-                            <option>10+ Years (Expert)</option>
-                        </select>
-                    </div>
+                <span class="section-tag">02. Availability & Skills</span>
+                <div class="grid md:grid-cols-2 gap-5 mb-5">
+                    <select class="w-full px-5 py-4 rounded-2xl">
+                        <option value="" disabled selected>Experience Level</option>
+                        <option>Fresher</option><option>1-3 Years</option><option>3-5 Years</option><option>5+ Years (Expert)</option>
+                    </select>
+                    <select class="w-full px-5 py-4 rounded-2xl">
+                        <option value="" disabled selected>Work Preferences</option>
+                        <option>Indian Clients Only (IST)</option>
+                        <option>International Overlap (US/UK)</option>
+                        <option>Flexible / Night Shifts</option>
+                    </select>
                 </div>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="space-y-2">
-                        <label class="text-sm text-gray-400 ml-1">Portfolio/Website Link</label>
-                        <input type="url" placeholder="https://yourwork.com" class="w-full px-6 py-4 rounded-2xl">
-                    </div>
-                    <div class="space-y-2">
-                        <label class="text-sm text-gray-400 ml-1">Resume / CV (Upload)</label>
-                        <input type="file" class="w-full px-6 py-3 rounded-2xl text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500">
-                    </div>
-                </div>
+                <input type="text" placeholder="Key Skills (e.g. SEO, Java, Tally, Canva)" class="w-full px-5 py-4 rounded-2xl">
             </section>
 
-            <section class="bg-white/5 p-8 rounded-[2.5rem] border border-white/5">
-                <span class="section-label text-indigo-300">03. Availability & Rates</span>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="space-y-2">
-                        <label class="text-sm text-gray-400 ml-1">Hourly Rate (USD)</label>
-                        <div class="relative">
-                            <span class="absolute left-6 top-4 text-gray-500">$</span>
-                            <input type="number" placeholder="50" class="w-full pl-10 pr-6 py-4 rounded-2xl">
-                        </div>
+            <section class="bg-indigo-600/5 p-6 rounded-[2rem] border border-indigo-500/10">
+                <span class="section-tag">03. Pricing & Payouts</span>
+                <div class="grid md:grid-cols-2 gap-5">
+                    <div class="relative">
+                        <span class="absolute left-5 top-4 text-gray-500">₹</span>
+                        <input type="number" placeholder="Hourly Rate (INR)" class="w-full pl-10 pr-5 py-4 rounded-2xl">
                     </div>
-                    <div class="space-y-2">
-                        <label class="text-sm text-gray-400 ml-1">Weekly Capacity</label>
-                        <select class="w-full px-6 py-4 rounded-2xl appearance-none">
-                            <option>Full-time (40h/week)</option>
-                            <option>Part-time (20h/week)</option>
-                            <option>Available for One-off Tasks</option>
-                        </select>
-                    </div>
-                </div>
-            </section>
-
-            <section>
-                <span class="section-label">04. Contact & Communication</span>
-                <div class="grid md:grid-cols-2 gap-8 mb-6">
-                    <div class="space-y-2">
-                        <label class="text-sm text-gray-400 ml-1">Email Address</label>
-                        <input type="email" placeholder="hello@yoursite.com" class="w-full px-6 py-4 rounded-2xl">
-                    </div>
-                    <div class="space-y-2">
-                        <label class="text-sm text-gray-400 ml-1">WhatsApp / Phone</label>
-                        <input type="tel" placeholder="+1 000 000 000" class="w-full px-6 py-4 rounded-2xl">
-                    </div>
-                </div>
-                <div class="space-y-2">
-                    <label class="text-sm text-gray-400 ml-1">Preferred Timezone</label>
-                    <select class="w-full px-6 py-4 rounded-2xl appearance-none">
-                        <option>GMT / UTC (London)</option>
-                        <option>EST (New York / Miami)</option>
-                        <option>PST (Los Angeles / SF)</option>
-                        <option>IST (New Delhi)</option>
-                        <option>JST (Tokyo)</option>
+                    <select class="w-full px-5 py-4 rounded-2xl">
+                        <option value="" disabled selected>Preferred Payment</option>
+                        <option>UPI (GPay/PhonePe)</option>
+                        <option>Direct Bank Transfer</option>
+                        <option>PayPal (For International)</option>
                     </select>
                 </div>
             </section>
 
-            <div class="pt-6">
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-5 rounded-full font-extrabold text-xl transition-all shadow-xl shadow-indigo-600/30 transform hover:-translate-y-1 active:scale-[0.98]">
-                    Finalize My Profile
-                </button>
-                <p class="text-center text-gray-600 text-sm mt-6">
-                    <i class="fas fa-shield-alt mr-2"></i> Your data is secured and will be used for hiring matches.
-                </p>
-            </div>
+            <section>
+                <span class="section-tag">04. Verification</span>
+                <div class="grid md:grid-cols-2 gap-5">
+                    <input type="email" placeholder="Email Address" class="w-full px-5 py-4 rounded-2xl">
+                    <input type="tel" placeholder="WhatsApp Number" class="w-full px-5 py-4 rounded-2xl">
+                </div>
+            </section>
+
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-5 rounded-full font-extrabold text-xl transition-all shadow-xl shadow-indigo-600/30">
+                Create My Profile
+            </button>
         </form>
     </div>
 </body>
