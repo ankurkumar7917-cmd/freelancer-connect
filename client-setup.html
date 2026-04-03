@@ -3,18 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Setup</title>
-    
+    <title>Business Verification | FreelancerConnect</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root { --primary: #10b981; --bg: #111827; --card: #1f2937; }
+        body { background-color: var(--bg); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: white; margin: 0; }
+        .setup-card { background: var(--card); padding: 30px; border-radius: 15px; max-width: 450px; margin: 40px auto; border: 1px solid #374151; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: #9ca3af; }
+        input, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #374151; background: #111827; color: white; box-sizing: border-box; }
+        input:focus { border-color: var(--primary); outline: none; }
+        button { background: var(--primary); color: white; padding: 14px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; margin-top: 10px; transition: 0.3s; }
+        button:hover { background: #059669; transform: translateY(-2px); }
+        #verify-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); color: var(--primary); justify-content: center; align-items: center; flex-direction: column; z-index: 100; }
+        .loader { border: 4px solid #10b981; border-top: 4px solid transparent; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
 </head>
 <body>
 
-    <div class="container" style="padding: 50px; text-align: center; color: white;">
-        <h1 style="color: #10b981;">Welcome, Client!</h1>
-        <p>Ready to find the perfect expert for your project?</p>
-        
-        <a href="index.html" style="color: #10b981; text-decoration: none;">← Back to Home</a>
+    <div id="verify-overlay">
+        <div class="loader"></div>
+        <h2 id="status-msg">VERIFYING WITH GSTN DATA...</h2>
+        <p style="color: white;">Please do not refresh the page.</p>
     </div>
 
+    <div class="container" style="padding: 20px; text-align: center;">
+        <h1 style="color: var(--primary); margin-top: 40px;">Trust & Safety Check</h1>
+        <p>Verified businesses get 3x more proposals from top experts.</p>
+        
+        <div class="setup-card">
+            <form id="setupForm">
+                <div class="input-group">
+                    <label>Registered Company Name</label>
+                    <input type="text" id="compName" placeholder="As per Legal Docs" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Business Email (Work Email Preferred)</label>
+                    <input type="email" id="email" placeholder="name@company.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Verification Type</label>
+                    <select id="docType">
+                        <option value="GST">GSTIN (India)</option>
+                        <option value="PAN">Business PAN</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Document Number</label>
+                    <input type="text" id="docNumber" placeholder="Enter GST or PAN number" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Upload Proof (GST Cert / PAN Card)</label>
+                    <input type="file" id="fileDoc" accept=".pdf,.jpg,.png" required>
+                </div>
+
+                <button type="submit">ACTIVATE VERIFIED PROFILE</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const supabaseUrl = 'https://gdmdqgxgzoifmdjukclp.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkbWRxZ3hnem9pZm1kanVrY2xwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNDM4OTQsImV4cCI6MjA5MDYxOTg5NH0.pMvd3U3ni-fYiNBhM2mrK-AOJje-vlC91JWwWi02eVE';
+        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        document.getElementById('setupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            document.getElementById('verify-overlay').style.display = 'flex';
+
+            const file = document.getElementById('fileDoc').files[0];
+            const compName = document.getElementById('compName').value;
+            const docNum = document.getElementById('docNumber').value;
+            const email = document.getElementById('email').value;
+
+            try {
+                // 1. Upload File to Supabase Storage
+                const fileName = ${Date.now()}_${file.name};
+                const { data: uploadData, error: uploadError } = await _supabase.storage
+                    .from('verification-docs')
+                    .upload(fileName, file);
+
+                if (uploadError) throw uploadError;
+
+                // 2. Save Data to 'clients' table
+                const { error: dbError } = await _supabase
+                    .from('clients')
+                    .insert([{ 
+                        company_name: compName, 
+                        gst_number: docNum, 
+                        email: email,
+                        document_url: fileName,
+                        is_verified: false 
+                    }]);
+
+                if (dbError) throw dbError;
+
+                document.getElementById('status-msg').innerText = "DATA SECURED SUCCESSFULLY!";
+                setTimeout(() => {
+                    window.location.href = "index.html"; 
+                }, 2000);
+
+            } catch (err) {
+                alert("Security Error: " + err.message);
+                document.getElementById('verify-overlay').style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
