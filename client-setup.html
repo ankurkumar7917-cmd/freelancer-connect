@@ -57,7 +57,7 @@
 
             try {
                 // 1. Upload File
-                const fileName = ${Date.now()}_${file.name};
+               const fileName = ${Date.now()}_${file.name};
                 const { error: uploadError } = await _supabase.storage
                     .from('verification-docs')
                     .upload(fileName, file);
