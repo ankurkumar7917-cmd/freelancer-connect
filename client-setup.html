@@ -1,58 +1,86 @@
-[11:20 pm, 3/4/2026] Ankur Kumar: <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Verification | FreelancerConnect</title>
+    <title>Business Verification | FreelancerHub</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        :root { --primary: #10b981; --bg: #111827; --card: #1f2937; }
-        body { background-color: var(--bg); font-family: sans-serif; color: white; text-align: center; }
-        .setup-card { background: var(--card); padding: 30px; border-radius: 15px; max-width: 450px; margin: 40px auto; border: 1px solid #374151; }
-        input, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #374151; background: #111827; color: white…
-[11:25 pm, 3/4/2026] Ankur Kumar: const fileName = ${Date.now()}_${file.name};
-[11:41 pm, 3/4/2026] Ankur Kumar: <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Verification | FreelancerConnect</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        :root { --primary: #10b981; --bg: #111827; --card: #1f2937; --error-red: #ef4444; }
-        body { background-color: var(--bg); font-family: sans-serif; color: white; text-align: center; }
-        .setup-card { background: var(--card); padding: 30px; border-radius: 15px; max-width: 450px; margin: 40px auto; border: 1px solid #374151; }
+        :root { --primary: #10b981; --bg: #020617; --card: rgba(255, 255, 255, 0.03); --error-red: #ef4444; }
         
+        body { 
+            background-color: var(--bg); 
+            font-family: 'Segoe UI', sans-serif; 
+            color: white; 
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .setup-card { 
+            background: var(--card); 
+            backdrop-filter: blur(15px);
+            padding: 40px; 
+            border-radius: 24px; 
+            max-width: 450px; 
+            margin: 20px auto; 
+            border: 1px solid rgba(255,255,255,0.1); 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -1px; }
+        p.subtitle { color: #9ca3af; margin-bottom: 30px; }
+
         input, select { 
-            width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; 
-            border: 1px solid #374151; background: #111827; color: white; 
-            box-sizing: border-box; transition: all 0.3s ease;
+            width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; 
+            border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: white; 
+            box-sizing: border-box; outline: none; transition: 0.3s;
         }
 
-        /* Google Forms Style Highlight */
-        input.error, select.error { 
-            border: 2px solid var(--error-red) !important; 
-            background: #2d1a1a !important; 
+        input:focus, select:focus { border-color: var(--primary); background: rgba(0,0,0,0.5); }
+
+        /* Error styling */
+        input.error, select.error { border: 2px solid var(--error-red) !important; }
+
+        button { 
+            background: var(--primary); color: white; padding: 16px; border: none; 
+            border-radius: 12px; cursor: pointer; font-weight: bold; width: 100%; 
+            margin-top: 20px; font-size: 1rem; transition: 0.3s;
+        }
+        button:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        #verify-overlay { 
+            display: none; position: fixed; top:0; left:0; width:100%; height:100%; 
+            background: rgba(2, 6, 23, 0.95); color: var(--primary); 
+            justify-content: center; align-items: center; flex-direction: column; z-index: 100; 
         }
 
-        button { background: var(--primary); color: white; padding: 14px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
-        #verify-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); color: var(--primary); justify-content: center; align-items: center; flex-direction: column; z-index: 100; }
-        .loader { border: 4px solid #10b981; border-top: 4px solid transparent; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
+        .loader { 
+            border: 4px solid #10b981; border-top: 4px solid transparent; 
+            border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; 
+            margin-bottom: 20px;
+        }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        .error-text { color: var(--error-red); font-size: 0.8rem; display: none; text-align: left; margin-top: -5px; margin-bottom: 5px; }
+        label { display:block; font-size: 0.8rem; color: #9ca3af; margin-top: 15px; text-align: left; margin-left: 5px; }
     </style>
 </head>
 <body>
 
     <div id="verify-overlay">
         <div class="loader"></div>
-        <h2 id="status-msg">VERIFYING BUSINESS DATA...</h2>
+        <h2 id="status-msg">VERIFYING DATA...</h2>
     </div>
 
-    <h1>Trust & Safety Check</h1>
+    <h1>Trust & Safety</h1>
+    <p class="subtitle">Complete your business profile to start hiring.</p>
+
     <div class="setup-card">
-        <form id="setupForm" novalidate>
+        <form id="setupForm">
             <input type="text" id="compName" placeholder="Registered Company Name">
             <input type="email" id="email" placeholder="Business Email">
             
@@ -63,10 +91,10 @@
             
             <input type="text" id="docNumber" placeholder="Enter ID Number">
             
-            <label style="display:block; font-size: 0.8rem; color: #9ca3af; margin-top: 10px; text-align: left;">Upload Proof (PDF/JPG)</label>
+            <label>Upload Verification Proof (PDF/JPG)</label>
             <input type="file" id="fileDoc" accept=".pdf,.jpg,.png">
             
-            <button type="submit" id="submitBtn">ACTIVATE VERIFIED PROFILE</button>
+            <button type="submit" id="submitBtn">ACTIVATE PROFILE</button>
         </form>
     </div>
 
@@ -79,54 +107,40 @@
         document.getElementById('setupForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // 1. Setup Validation
             const compName = document.getElementById('compName');
             const email = document.getElementById('email');
             const docNum = document.getElementById('docNumber');
             const fileInput = document.getElementById('fileDoc');
-            const allInputs = [compName, email, docNum, fileInput];
-            
-            let firstEmpty = null;
+            const docType = document.getElementById('docType');
 
-            // 2. Clear previous errors and check for empty fields
-            allInputs.forEach(input => {
-                input.classList.remove('error');
-                const isEmpty = (input.type === 'file') ? !input.files[0] : !input.value.trim();
-                
-                if (isEmpty) {
-                    input.classList.add('error');
-                    if (!firstEmpty) firstEmpty = input;
-                }
-            });
-
-            // 3. If something is missing, jump to that box and stop
-            if (firstEmpty) {
-                firstEmpty.focus();
+            // Basic validation
+            if (!compName.value || !email.value || !docNum.value || !fileInput.files[0]) {
+                alert("Please fill in all details and upload your document.");
                 return;
             }
 
-            // 4. Everything is filled - Start Upload
+            // Show Loading Overlay
             document.getElementById('verify-overlay').style.display = 'flex';
+            
             const file = fileInput.files[0];
+            const fileName = ${Date.now()}_${file.name}; // FIXED THE SYNTAX HERE
 
             try {
-                // Upload File - Fixed backtick syntax error here
-                const fileName = ${Date.now()}_${file.name};
-                
+                // 1. Upload the File to Supabase Storage
                 const { error: uploadError } = await _supabase.storage
                     .from('verification-docs')
                     .upload(fileName, file);
                 
-                if (uploadError) throw new Error("Storage Error: " + uploadError.message);
+                if (uploadError) throw new Error("File Upload Failed: " + uploadError.message);
 
-                // Save Database Row
+                // 2. Save the Business Data to the Database
                 const { error: dbError } = await _supabase
                     .from('clients')
                     .insert([{ 
                         company_name: compName.value, 
                         gst_number: docNum.value, 
                         email: email.value,
-                        doc_type: document.getElementById('docType').value,
+                        doc_type: docType.value,
                         document_url: fileName,
                         is_verified: false 
                     }]);
@@ -134,11 +148,13 @@
                 if (dbError) throw new Error("Database Error: " + dbError.message);
 
                 // SUCCESS
-                document.getElementById('status-msg').innerText = "VERIFIED!";
-                setTimeout(() => { window.location.href = "index.html"; }, 2000);
+                document.getElementById('status-msg').innerText = "SUCCESS! REDIRECTING...";
+                setTimeout(() => { 
+                    window.location.href = "index.html"; 
+                }, 2000);
 
             } catch (err) {
-                alert("Error: " + err.message);
+                alert(err.message);
                 document.getElementById('verify-overlay').style.display = 'none';
             }
         });
