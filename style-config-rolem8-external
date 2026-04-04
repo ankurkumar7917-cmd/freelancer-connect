@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Admin Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { background: #020617; color: white; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .hidden-panel { display: none; }
+    </style>
+</head>
+<body class="p-8">
+
+    <div id="lock-screen" class="fixed inset-0 flex items-center justify-center bg-slate-950 z-50">
+        <div class="glass p-8 rounded-3xl text-center max-w-sm w-full">
+            <h2 class="text-2xl font-bold mb-4 text-emerald-400">Admin Access</h2>
+            <input type="password" id="adminPass" placeholder="Enter Secret Key" class="w-full p-3 rounded-lg bg-black border border-slate-700 mb-4 text-center">
+            <button onclick="checkAccess()" class="w-full bg-emerald-600 p-3 rounded-lg font-bold hover:bg-emerald-500 transition">UNLOCK PANEL</button>
+        </div>
+    </div>
+
+    <div id="admin-content" class="hidden-panel max-w-6xl mx-auto">
+        <header class="flex justify-between items-center mb-10">
+            <div>
+                <h1 class="text-4xl font-extrabold text-white">Verification Queue</h1>
+                <p class="text-slate-400">Review documents and approve elite members.</p>
+            </div>
+            <button onclick="location.reload()" class="text-slate-400 hover:text-white underline">Logout</button>
+        </header>
+
+        <div id="clientList" class="grid gap-4">
+            <div class="text-slate-500 animate-pulse">Fetching pending requests...</div>
+        </div>
+    </div>
+
+    <script>
+        // REPLACE THIS WITH YOUR DESIRED PASSWORD
+        const SECRET_KEY = "ankurKumar7917@no-one"; 
+
+        const supabaseUrl = 'https://gdmdqgxgzoifmdjukclp.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkbWRxZ3hnem9pZm1kanVrY2xwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNDM4OTQsImV4cCI6MjA5MDYxOTg5NH0.pMvd3U3ni-fYiNBhM2mrK-AOJje-vlC91JWwWi02eVE';
+        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        function checkAccess() {
+            const pass = document.getElementById('adminPass').value;
+            if (pass === SECRET_KEY) {
+                document.getElementById('lock-screen').style.display = 'none';
+                document.getElementById('admin-content').classList.remove('hidden-panel');
+                loadPending();
+            } else {
+                alert("ACCESS DENIED: Unauthorized attempt logged.");
+                window.location.href = "index.html";
+            }
+        }
+
+        async function loadPending() {
+            const container = document.getElementById('clientList');
+            const { data, error } = await _supabase
+                .from('clients')
+                .select('*')
+                .eq('is_verified', false);
+
+            if (error) {
+                container.innerHTML = <div class="text-red-400">Error loading data: ${error.message}</div>;
+                return;
+            }
+
+            if (data.length === 0) {
+                container.innerHTML = <div class="p-20 text-center glass rounded-3xl text-slate-500">No pending verifications. All clear! ✅</div>;
+                return;
+            }
+
+            container.innerHTML = '';
+            data.forEach(client => {
+                const docUrl = ${supabaseUrl}/storage/v1/object/public/verification-docs/${client.document_url};
+                
+                container.innerHTML += `
+                    <div class="glass p-6 rounded-2xl flex flex-wrap justify-between items-center gap-4">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-emerald-400">${client.company_name}</h3>
+                            <p class="text-slate-400 text-sm">${client.email} | GST: <span class="text-slate-200">${client.gst_number}</span></p>
+                        </div>
+                        <div class="flex items-center gap-6">
+                            <a href="${docUrl}" target="_blank" class="text-blue-400 hover:text-blue-300 font-medium flex items-center gap-2">
+                                📄 View Proof
+                            </a>
+                            <button onclick="approve('${client.id}')" class="bg-emerald-600/20 text-emerald-400 border border-emerald-600/50 px-6 py-2 rounded-xl hover:bg-emerald-600 hover:text-white transition font-bold">
+                                APPROVE
+                            </button>
+                            <button onclick="reject('${client.id}')" class="text-rose-500 hover:text-rose-400 text-sm">
+                                Reject
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        async function approve(id) {
+            const { error } = await _supabase
+                .from('clients')
+                .update({ is_verified: true })
+                .eq('id', id);
+
+            if (!error) {
+                alert("Success: Business is now VERIFIED.");
+                loadPending();
+            }
+        }
+
+        async function reject(id) {
+            if(confirm("Are you sure? This will delete the request.")) {
+                await _supabase.from('clients').delete().eq('id', id);
+                loadPending();
+            }
+        }
+    </script>
+</body>
+</html>
