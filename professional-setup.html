@@ -5,87 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Setup | FreelancerHub India</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
-        
-        body { 
-            background: #020617; 
-            color: white; 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Matches your main page background */
-        .mesh-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-                        radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%);
-            z-index: -1;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Input & Dropdown Styling */
-        input, select, textarea {
-            background: rgba(255, 255, 255, 0.05) !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            color: white !important;
-            transition: all 0.3s ease;
-        }
-
-        /* FIX: Ensures dropdown options are dark and readable */
-        select option {
-            background-color: #0f172a;
-            color: white;
-        }
-
-        input:focus, select:focus, textarea:focus { 
-            border-color: #6366f1 !important; 
-            background: rgba(255, 255, 255, 0.08) !important;
-            outline: none; 
-        }
-
-        .section-tag {
-            color: #6366f1; font-weight: 800; text-transform: uppercase; 
-            font-size: 0.7rem; letter-spacing: 0.2em; margin-bottom: 1.5rem; display: block;
-        }
+        body { background: #020617; color: white; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
+        .mesh-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%); z-index: -1; }
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        input, select, textarea { background: rgba(255, 255, 255, 0.05) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; color: white !important; transition: all 0.3s ease; }
+        select option { background-color: #0f172a; color: white; }
+        input:focus, select:focus, textarea:focus { border-color: #6366f1 !important; background: rgba(255, 255, 255, 0.08) !important; outline: none; }
+        .section-tag { color: #6366f1; font-weight: 800; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.2em; margin-bottom: 1.5rem; display: block; }
+        #loading-overlay { display: none; position: fixed; inset: 0; background: rgba(2,6,23,0.9); z-index: 100; flex-direction: column; align-items: center; justify-content: center; color: #6366f1; font-weight: bold; }
     </style>
 </head>
 <body class="flex flex-col items-center justify-start px-6 py-12">
 
+    <div id="loading-overlay">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-indigo-500 mb-4"></div>
+        <p class="tracking-widest uppercase text-sm">Launching Profile...</p>
+    </div>
+
     <div class="mesh-bg"></div>
 
     <div class="max-w-3xl w-full">
-        
         <header class="text-center mb-12">
             <h1 class="text-6xl font-extrabold mb-3 tracking-tighter italic">Get Started.</h1>
             <p class="text-gray-400 text-lg">Build your profile and start earning securely.</p>
         </header>
 
-        <form class="glass-card p-8 md:p-12 rounded-[2.5rem] space-y-12">
+        <form id="proForm" class="glass-card p-8 md:p-12 rounded-[2.5rem] space-y-12">
             
             <section>
                 <span class="section-tag">01. Professional Profile</span>
                 <div class="grid md:grid-cols-2 gap-6 mb-6">
                     <div class="space-y-2">
                         <label class="text-xs text-gray-400 ml-1">Full Name</label>
-                        <input type="text" placeholder="e.g. Rahul Sharma" class="w-full px-6 py-4 rounded-2xl">
+                        <input type="text" id="fullName" placeholder="e.g. Rahul Sharma" class="w-full px-6 py-4 rounded-2xl" required>
                     </div>
                     <div class="space-y-2">
                         <label class="text-xs text-gray-400 ml-1">Job Title</label>
-                        <input type="text" placeholder="e.g. Video Editor / Developer" class="w-full px-6 py-4 rounded-2xl">
+                        <input type="text" id="jobTitle" placeholder="e.g. Video Editor / Developer" class="w-full px-6 py-4 rounded-2xl" required>
                     </div>
                 </div>
                 <div class="grid md:grid-cols-2 gap-6 mb-6">
                     <div class="space-y-2">
                         <label class="text-xs text-gray-400 ml-1">Current State</label>
-                        <select class="w-full px-6 py-4 rounded-2xl cursor-pointer">
+                        <select id="state" class="w-full px-6 py-4 rounded-2xl cursor-pointer" required>
                             <option value="" disabled selected>Select State</option>
                             <option>Delhi</option><option>Maharashtra</option><option>Karnataka</option>
                             <option>Uttar Pradesh</option><option>Gujarat</option><option>Other</option>
@@ -93,7 +59,7 @@
                     </div>
                     <div class="space-y-2">
                         <label class="text-xs text-gray-400 ml-1">Experience Level</label>
-                        <select class="w-full px-6 py-4 rounded-2xl cursor-pointer">
+                        <select id="experience" class="w-full px-6 py-4 rounded-2xl cursor-pointer" required>
                             <option>Fresher</option>
                             <option>1-3 Years</option>
                             <option>3-5 Years</option>
@@ -103,77 +69,66 @@
                 </div>
                 <div class="space-y-2">
                     <label class="text-xs text-gray-400 ml-1">Short Bio</label>
-                    <textarea placeholder="Tell clients why they should hire you..." class="w-full px-6 py-4 rounded-2xl h-28 resize-none"></textarea>
+                    <textarea id="bio" placeholder="Tell clients why they should hire you..." class="w-full px-6 py-4 rounded-2xl h-28 resize-none" required></textarea>
                 </div>
             </section>
 
             <section>
                 <span class="section-tag">02. Proof of Work</span>
-                
                 <div class="grid md:grid-cols-2 gap-6 mb-6">
                     <div class="space-y-2">
                         <label class="text-xs text-gray-400 ml-1">Instagram Portfolio</label>
                         <div class="relative">
                             <span class="absolute left-5 top-4 text-pink-500"><i class="fab fa-instagram"></i></span>
-                            <input type="url" placeholder="instagram.com/work" class="w-full pl-12 pr-5 py-4 rounded-2xl">
+                            <input type="url" id="instagram" placeholder="instagram.com/work" class="w-full pl-12 pr-5 py-4 rounded-2xl">
                         </div>
                     </div>
                     <div class="space-y-2">
                         <label class="text-xs text-gray-400 ml-1">Portfolio / Website Link</label>
                         <div class="relative">
                             <span class="absolute left-5 top-4 text-indigo-400"><i class="fas fa-globe"></i></span>
-                            <input type="url" placeholder="https://yourwork.com" class="w-full pl-12 pr-5 py-4 rounded-2xl">
+                            <input type="url" id="portfolioUrl" placeholder="https://yourwork.com" class="w-full pl-12 pr-5 py-4 rounded-2xl">
                         </div>
                     </div>
                 </div>
-
                 <div class="grid md:grid-cols-2 gap-6 mb-6">
                     <div class="space-y-2">
                         <label class="text-xs text-gray-400 ml-1">Upload Resume (PDF)</label>
-                        <input type="file" class="w-full px-4 py-3 rounded-2xl text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer">
+                        <input type="file" id="resumeFile" class="w-full px-4 py-3 rounded-2xl text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer">
                     </div>
                     <div class="space-y-2">
                         <label class="text-xs text-gray-400 ml-1">Best Project Title</label>
-                        <input type="text" placeholder="e.g. E-commerce App Design" class="w-full px-6 py-4 rounded-2xl">
+                        <input type="text" id="projectTitle" placeholder="e.g. E-commerce App Design" class="w-full px-6 py-4 rounded-2xl">
                     </div>
                 </div>
-
                 <div class="space-y-2">
                     <label class="text-xs text-gray-400 ml-1">Project Details (Describe your work)</label>
-                    <textarea placeholder="Briefly explain what you did and the results..." class="w-full px-6 py-4 rounded-2xl h-28 resize-none bg-indigo-600/5"></textarea>
+                    <textarea id="projectDetails" placeholder="Briefly explain what you did and the results..." class="w-full px-6 py-4 rounded-2xl h-28 resize-none bg-indigo-600/5"></textarea>
                 </div>
             </section>
 
             <section class="bg-indigo-600/10 p-8 rounded-[2.5rem] border border-indigo-500/20">
-                <div class="flex items-center justify-between mb-6">
-                    <span class="section-tag !mb-0">03. Secure Payouts</span>
-                    <span class="bg-indigo-500/20 text-indigo-300 text-[10px] px-3 py-1 rounded-full border border-indigo-500/30 uppercase font-bold tracking-widest">
-                        <i class="fas fa-shield-alt mr-1"></i> Escrow Protected
-                    </span>
-                </div>
-
+                <span class="section-tag">03. Secure Payouts</span>
                 <div class="grid md:grid-cols-2 gap-6 mb-6">
                     <div class="space-y-2">
                         <label class="text-xs text-gray-400 ml-1">Hourly Rate (INR ₹)</label>
                         <div class="relative">
                             <span class="absolute left-6 top-4 text-gray-500 font-bold">₹</span>
-                            <input type="number" placeholder="500" class="w-full pl-10 pr-6 py-4 rounded-2xl">
+                            <input type="number" id="hourlyRate" placeholder="500" class="w-full pl-10 pr-6 py-4 rounded-2xl" required>
                         </div>
                     </div>
                     <div class="space-y-2">
                         <label class="text-xs text-gray-400 ml-1">Weekly Availability</label>
-                        <select class="w-full px-6 py-4 rounded-2xl cursor-pointer">
+                        <select id="availability" class="w-full px-6 py-4 rounded-2xl cursor-pointer" required>
                             <option>Full-Time (40h+)</option>
                             <option>Part-Time (20h)</option>
                             <option>Weekend Only</option>
                         </select>
                     </div>
                 </div>
-
                 <div class="space-y-2">
                     <label class="text-xs text-gray-400 ml-1">Payout UPI ID (for GPay/PhonePe)</label>
-                    <input type="text" placeholder="yourname@upi" class="w-full px-6 py-4 rounded-2xl">
-                    <p class="text-[10px] text-indigo-400 ml-2">Payments are held by FreelancerHub and released after work approval.</p>
+                    <input type="text" id="upiId" placeholder="yourname@upi" class="w-full px-6 py-4 rounded-2xl" required>
                 </div>
             </section>
 
@@ -182,28 +137,58 @@
                 <div class="grid md:grid-cols-2 gap-6">
                     <div class="space-y-2">
                         <label class="text-xs text-gray-400 ml-1">Email Address</label>
-                        <input type="email" placeholder="name@example.com" class="w-full px-6 py-4 rounded-2xl">
+                        <input type="email" id="email" placeholder="name@example.com" class="w-full px-6 py-4 rounded-2xl" required>
                     </div>
                     <div class="space-y-2">
                         <label class="text-xs text-gray-400 ml-1">WhatsApp Number</label>
-                        <input type="tel" placeholder="+91 00000 00000" class="w-full px-6 py-4 rounded-2xl">
+                        <input type="tel" id="whatsapp" placeholder="+91 00000 00000" class="w-full px-6 py-4 rounded-2xl" required>
                     </div>
                 </div>
             </section>
 
-            <div class="pt-4">
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-5 rounded-full font-extrabold text-xl transition-all shadow-xl shadow-indigo-600/30 transform hover:-translate-y-1 active:scale-[0.98]">
-                    Launch My Profile
-                </button>
-            </div>
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-5 rounded-full font-extrabold text-xl transition-all shadow-xl shadow-indigo-600/30">
+                Launch My Profile
+            </button>
         </form>
-
-        <footer class="mt-12 py-10 border-t border-white/5 text-center">
-            <p class="text-gray-600 text-xs font-bold tracking-widest uppercase">
-                Secure Professional Onboarding &copy; 2026
-            </p>
-        </footer>
     </div>
 
+    <script>
+        const supabaseUrl = 'https://gdmdqgxgzoifmdjukclp.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkbWRxZ3hnem9pZm1kanVrY2xwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNDM4OTQsImV4cCI6MjA5MDYxOTg5NH0.pMvd3U3ni-fYiNBhM2mrK-AOJje-vlC91JWwWi02eVE';
+        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        document.getElementById('proForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            document.getElementById('loading-overlay').style.display = 'flex';
+
+            // Gather data from your existing questions
+            const profileData = {
+                full_name: document.getElementById('fullName').value,
+                job_title: document.getElementById('jobTitle').value,
+                state: document.getElementById('state').value,
+                experience: document.getElementById('experience').value,
+                bio: document.getElementById('bio').value,
+                instagram: document.getElementById('instagram').value,
+                portfolio_url: document.getElementById('portfolioUrl').value,
+                project_title: document.getElementById('projectTitle').value,
+                project_details: document.getElementById('projectDetails').value,
+                hourly_rate: document.getElementById('hourlyRate').value,
+                availability: document.getElementById('availability').value,
+                upi_id: document.getElementById('upiId').value,
+                email: document.getElementById('email').value,
+                whatsapp: document.getElementById('whatsapp').value
+            };
+
+            const { error } = await _supabase.from('freelancers').insert([profileData]);
+
+            if (error) {
+                alert("Error: " + error.message);
+                document.getElementById('loading-overlay').style.display = 'none';
+            } else {
+                alert("Success! Your profile is live.");
+                window.location.href = "index.html";
+            }
+        });
+    </script>
 </body>
 </html>
